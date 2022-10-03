@@ -6,6 +6,14 @@ const ice = Color(0XFFF1F3F5);
 const darkBlue = Color(0XFF00384C);
 const gray = Color(0XFF343A40);
 const gray2 = Color(0XFF5E6770);
+const darkGradient = LinearGradient(
+    colors: [
+      Color(0xff000000),
+      Color(0xff000000a1),
+    ],
+    tileMode: TileMode.mirror,
+    begin: Alignment.bottomLeft,
+    end: Alignment.centerRight);
 
 final ThemeData appTheme = ThemeData(
     primaryColor: darkBlue,
