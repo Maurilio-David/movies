@@ -1,10 +1,10 @@
-import 'package:movies/src/models/movie_model.dart';
 import 'package:movies/src/service/http_manager.dart';
 import 'package:movies/src/utils/constants/constants.dart';
 import 'package:movies/src/utils/constants/endpoints.dart';
 
 class HomeProvider {
   HttpManager httpManager = HttpManager();
+  //Actions
   Future<dynamic> getMoviesAction() async {
     final result = await httpManager.restRequest(
       url: Endpoints.actionMovies,
@@ -21,5 +21,35 @@ class HomeProvider {
       headers: {'Authorization': 'Bearer ${Constants.key}'},
     );
     return result;
+  }
+
+  //Adventure
+  Future<dynamic> getMoviesAdventure() async {
+    final result = await httpManager.restRequest(
+      url: Endpoints.adventureMovies,
+      method: HttpMethods.get,
+      headers: {'Authorization': 'Bearer ${Constants.key}'},
+    );
+    return result['results'];
+  }
+
+  //Fantasy
+  Future<dynamic> getMoviesFantasy() async {
+    final result = await httpManager.restRequest(
+      url: Endpoints.fantasyMovies,
+      method: HttpMethods.get,
+      headers: {'Authorization': 'Bearer ${Constants.key}'},
+    );
+    return result['results'];
+  }
+
+  //Comedy
+  Future<dynamic> getMoviesComedy() async {
+    final result = await httpManager.restRequest(
+      url: Endpoints.comedyMovies,
+      method: HttpMethods.get,
+      headers: {'Authorization': 'Bearer ${Constants.key}'},
+    );
+    return result['results'];
   }
 }
