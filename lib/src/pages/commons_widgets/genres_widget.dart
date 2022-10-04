@@ -15,7 +15,7 @@ class GenresWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 12),
-      height: 40,
+      height: 20,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: movie.genres!.length,

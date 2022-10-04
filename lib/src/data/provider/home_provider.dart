@@ -52,4 +52,14 @@ class HomeProvider {
     );
     return result['results'];
   }
+
+  //Cast
+  Future<dynamic> getMovieCast(int id) async {
+    final result = await httpManager.restRequest(
+      url: '${Endpoints.detailsMovies}/$id/credits?language=pt-BR',
+      method: HttpMethods.get,
+      headers: {'Authorization': 'Bearer ${Constants.key}'},
+    );
+    return result;
+  }
 }

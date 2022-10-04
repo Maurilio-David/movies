@@ -6,10 +6,12 @@ const ice = Color(0XFFF1F3F5);
 const darkBlue = Color(0XFF00384C);
 const gray = Color(0XFF343A40);
 const gray2 = Color(0XFF5E6770);
-const darkGradient = LinearGradient(
+const gray3 = Color(0XFF868E96);
+const gray4 = Color(0XFFE9ECEF);
+final darkGradient = LinearGradient(
     colors: [
-      Color(0xff000000),
-      Color(0xff000000a1),
+      const Color(0xff000000),
+      const Color(0xff000000).withOpacity(0.63),
     ],
     tileMode: TileMode.mirror,
     begin: Alignment.bottomLeft,

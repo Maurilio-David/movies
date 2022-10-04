@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:movies/src/data/repository/home_repository.dart';
+import 'package:movies/src/models/cast_model.dart';
+import 'package:movies/src/models/crew_model.dart';
 import 'package:movies/src/models/movie_model.dart';
 import 'package:movies/src/models/movies_model.dart';
 
@@ -13,6 +15,8 @@ class HomeController extends GetxController {
   final detailsMoviesFantasy = <Movie>[].obs;
   final moviesComedy = <Movies>[].obs;
   final detailsMoviesComedy = <Movie>[].obs;
+  final cast = <Cast>[].obs;
+  final crew = <Crew>[].obs;
   HomeRepository homeRepository = HomeRepository();
   @override
   void onInit() {
@@ -85,5 +89,49 @@ class HomeController extends GetxController {
         }
       }
     });
+  }
+
+  castMovie(int id) async {
+    var res = await homeRepository.castMovie(id);
+    var resultCast = getCast(res);
+    var resultCrew = getCrew(res);
+
+    resultCast.then((value) {
+      if (value.isNotEmpty) {
+        cast.clear();
+        cast.addAll(value);
+      }
+    });
+
+    resultCrew.then((value) {
+      if (value.isNotEmpty) {
+        crew.clear();
+        crew.addAll(value);
+      }
+    });
+  }
+
+  Future<List<Cast>> getCast(dynamic list) async {
+    List<Cast> cast = [];
+    cast.clear();
+    list['cast'].forEach((e) {
+      cast.add(Cast.fromJson(e));
+    });
+    return cast;
+  }
+
+  Future<List<Crew>> getCrew(dynamic list) async {
+    List<Crew> crew = [];
+    List<Crew> director = [];
+    crew.clear();
+    list['crew'].forEach((e) {
+      crew.add(Crew.fromJson(e));
+    });
+    for (Crew directors in crew) {
+      if (directors.department == 'Directing') {
+        director.add(directors);
+      }
+    }
+    return director;
   }
 }

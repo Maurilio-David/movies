@@ -152,4 +152,3 @@ class Movie {
     return data;
   }
 }
-/*  */

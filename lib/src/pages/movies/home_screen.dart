@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies/src/controllers/home_controller.dart';
-import 'package:movies/src/pages/home/action_tab.dart';
-import 'package:movies/src/pages/home/adventure_tab.dart';
-import 'package:movies/src/pages/home/comedy_tab.dart';
-import 'package:movies/src/pages/home/fantasy_tab.dart';
-import 'package:movies/src/pages/home/widgets/custom_text_field.dart';
-import 'package:movies/src/pages/home/widgets/custon_tab_label.dart';
+import 'package:movies/src/pages/movies/action_tab.dart';
+import 'package:movies/src/pages/movies/adventure_tab.dart';
+import 'package:movies/src/pages/movies/comedy_tab.dart';
+import 'package:movies/src/pages/movies/fantasy_tab.dart';
+import 'package:movies/src/pages/movies/widgets/custom_text_field.dart';
+import 'package:movies/src/pages/movies/widgets/custon_tab_label.dart';
 import 'package:movies/src/theme/app_theme.dart';
 
 class HomeScreen extends GetView<HomeController> {

@@ -92,4 +92,10 @@ class HomeRepository {
 
     return movie[0];
   }
+
+  Future<dynamic> castMovie(int id) async {
+    var res = await homeProvider.getMovieCast(id);
+
+    return res;
+  }
 }
