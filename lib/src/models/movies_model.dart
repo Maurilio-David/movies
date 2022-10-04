@@ -38,7 +38,8 @@ class Movies {
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     overview = json['overview'];
-    popularity = json['popularity'];
+    popularity =
+        json['popularity'] != null ? json['popularity'].toDouble() : 0.0;
     posterPath = json['poster_path'];
     releaseDate = json['release_date'];
     title = json['title'];

@@ -11,7 +11,7 @@ const gray4 = Color(0XFFE9ECEF);
 final darkGradient = LinearGradient(
     colors: [
       const Color(0xff000000),
-      const Color(0xff000000).withOpacity(0.63),
+      const Color(0xff000000).withOpacity(0.1),
     ],
     tileMode: TileMode.mirror,
     begin: Alignment.bottomLeft,

@@ -1,3 +1,5 @@
+import 'package:data_connection_checker_nulls/data_connection_checker_nulls.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:movies/src/data/repository/home_repository.dart';
 import 'package:movies/src/models/cast_model.dart';
@@ -7,6 +9,12 @@ import 'package:movies/src/models/movies_model.dart';
 
 class HomeController extends GetxController {
   final RxInt label = 0.obs;
+  RxBool showTab = true.obs;
+  RxBool loading = false.obs;
+  RxBool conected = true.obs;
+  var queryController = TextEditingController().obs;
+  final search = <Movies>[].obs;
+  final detailsSearch = <Movie>[].obs;
   final moviesActions = <Movies>[].obs;
   final detailsMoviesActions = <Movie>[].obs;
   final moviesAdventure = <Movies>[].obs;
@@ -21,14 +29,44 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     getAll();
   }
 
   getAll() {
-    getMoviesAction();
-    getMoviesAdventure();
-    getMoviesComedy();
-    getMoviesFantasy();
+    isConected();
+    if (conected.value) {
+      getMoviesAction();
+      getMoviesAdventure();
+      getMoviesComedy();
+      getMoviesFantasy();
+    }
+  }
+
+  isConected() async {
+    bool result = await DataConnectionChecker().hasConnection;
+    conected.value = result;
+  }
+
+  searchMovie(String query) {
+    isConected();
+    if (conected.value) {
+      loading.value = true;
+      detailsSearch.clear();
+      homeRepository.searchMovie(query).then((value) {
+        if (value.isNotEmpty) {
+          search.clear();
+          search.addAll(value);
+          detailsSearch.clear();
+          for (Movies element in search) {
+            homeRepository.detailsSearch(element.id!).then((value) {
+              detailsSearch.add(value);
+            });
+          }
+        }
+      });
+    }
+    loading.value = false;
   }
 
   getMoviesAction() {

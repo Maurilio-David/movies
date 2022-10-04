@@ -15,13 +15,11 @@ class CardMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       height: 470,
       decoration: BoxDecoration(
-        image: DecorationImage(
-            image: NetworkImage('${Endpoints.image}${movie.posterPath}'),
-            fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(20),
         color: darkBlue,
         boxShadow: [
@@ -33,28 +31,53 @@ class CardMovie extends StatelessWidget {
           ),
         ],
       ),
-      child: Container(
-        height: 161,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: darkGradient,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              movie.title!.toUpperCase(),
-              style: GoogleFonts.montserrat(
-                color: white,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: movie.posterPath != null
+                ? Hero(
+                    tag: movie.posterPath!,
+                    child: Image.network(
+                      '${Endpoints.image}${movie.posterPath}',
+                      height: 470,
+                      width: size.width - 40,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : Container(
+                    color: darkBlue,
+                  ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: 470,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: darkGradient,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      movie.title!.toUpperCase(),
+                      style: GoogleFonts.montserrat(
+                        color: white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    GenresWidget(movie: movie),
+                  ],
+                ),
               ),
-            ),
-            GenresWidget(movie: movie),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }

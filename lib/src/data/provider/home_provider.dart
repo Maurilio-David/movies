@@ -4,6 +4,16 @@ import 'package:movies/src/utils/constants/endpoints.dart';
 
 class HomeProvider {
   HttpManager httpManager = HttpManager();
+  //Search
+  Future<dynamic> searchMovie(String query) async {
+    final result = await httpManager.restRequest(
+      url: '${Endpoints.search}=$query',
+      method: HttpMethods.get,
+      headers: {'Authorization': 'Bearer ${Constants.key}'},
+    );
+    return result['results'];
+  }
+
   //Actions
   Future<dynamic> getMoviesAction() async {
     final result = await httpManager.restRequest(
@@ -14,6 +24,7 @@ class HomeProvider {
     return result['results'];
   }
 
+  //Details
   Future<dynamic> detailsMovies(int id) async {
     final result = await httpManager.restRequest(
       url: '${Endpoints.detailsMovies}/$id?language=pt-BR',

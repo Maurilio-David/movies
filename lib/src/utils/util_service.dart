@@ -15,7 +15,8 @@ class UtilService {
     List<String> parts = d.toString().split(':');
     return '${parts[0].padLeft(
       1,
-    )}h ${parts[1].padLeft(2, '0')} min';
+    )}h'
+        '${parts[1].padLeft(2, '0')} min';
   }
 
   String getYear(DateTime date) {

@@ -75,10 +75,6 @@ class MovieDetailsScreen extends GetView<HomeController> {
                         height: 318,
                         width: 216,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  '${Endpoints.image}${movie.posterPath}'),
-                              fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(20),
                           color: darkBlue,
                           boxShadow: [
@@ -89,6 +85,31 @@ class MovieDetailsScreen extends GetView<HomeController> {
                               offset: const Offset(0, 2),
                             ),
                           ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: movie.posterPath != null
+                              ? Hero(
+                                  tag: movie.posterPath!,
+                                  child: Image.network(
+                                    '${Endpoints.image}${movie.posterPath}',
+                                    height: 318,
+                                    width: 216,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Container(
+                                  color: darkBlue,
+                                  child: Center(
+                                    child: Text(
+                                      'Indisponível',
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: gray3),
+                                    ),
+                                  ),
+                                ),
                         ),
                       ),
                       //Avaliação
@@ -152,11 +173,14 @@ class MovieDetailsScreen extends GetView<HomeController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CardInformation(
-                            title: 'Ano:  ',
-                            information: utilService
-                                .getYear(DateTime.parse(movie.releaseDate!)),
-                          ),
+                          movie.releaseDate!.isEmpty
+                              ? const CardInformation(
+                                  title: 'Ano:  ', information: 'Indisponível')
+                              : CardInformation(
+                                  title: 'Ano:  ',
+                                  information: utilService.getYear(
+                                      DateTime.parse(movie.releaseDate!)),
+                                ),
                           CardInformation(
                               title: 'Duração:  ',
                               information:

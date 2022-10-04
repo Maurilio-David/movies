@@ -5,6 +5,28 @@ import 'package:movies/src/models/movies_model.dart';
 class HomeRepository {
   HomeProvider homeProvider = HomeProvider();
 
+  //Search
+  Future<List<Movies>> searchMovie(String query) async {
+    List<Movies> search = [];
+    search.clear();
+    var res = await homeProvider.searchMovie(query);
+    res.forEach((e) {
+      search.add(Movies.fromJson(e));
+    });
+
+    return search;
+  }
+
+  Future<Movie> detailsSearch(int id) async {
+    List<Movie> movie = [];
+    var res = await homeProvider.detailsMovies(id);
+    movie.clear();
+
+    movie.add(Movie.fromJson(res));
+
+    return movie[0];
+  }
+
   //Action
   Future<List<Movies>> getMoviesAction() async {
     List<Movies> all = [];

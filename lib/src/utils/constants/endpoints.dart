@@ -2,6 +2,8 @@ const String baseUrl = 'https://api.themoviedb.org/3';
 
 abstract class Endpoints {
   static const String popularMovies = '$baseUrl/movie/popular';
+  static const String search =
+      '$baseUrl/search/movie?language=pt-BR&page=1&query';
   static const String actionMovies =
       '$baseUrl/movie/popular?with_genres=28&language=pt-BR';
   static const String adventureMovies =
