@@ -27,7 +27,7 @@ class CreditsWidget extends StatelessWidget {
             child: Text(
               cast != null ? 'Elenco' : 'Diretor',
               style: GoogleFonts.montserrat(
-                  fontSize: 14, color: gray2, fontWeight: FontWeight.w600),
+                  fontSize: 14, color: gray2, fontWeight: FontWeight.w400),
             ),
           ),
           const SizedBox(

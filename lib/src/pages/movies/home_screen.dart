@@ -17,6 +17,7 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFFFFFF),
@@ -31,133 +32,137 @@ class HomeScreen extends GetView<HomeController> {
         elevation: 0,
       ),
       backgroundColor: const Color(0xFFFFFFFF),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 20,
-        ),
-        child: Obx(
-          () => Column(
-            children: [
-              //Campo de busca
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: CustomTextField(
-                  icon: Icons.search,
-                  label: 'Pesquise filmes',
-                  controller: controller.queryController.value,
-                  onChanged: (value) {
-                    if (value.isEmpty) {
-                      controller.showTab.value = true;
-                    } else {
-                      controller.showTab.value = false;
-                      controller.searchMovie(value);
-                    }
-                  },
-                ),
-              ),
-              Visibility(
-                visible: controller.loading.value,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: darkBlue,
+      body: SingleChildScrollView(
+        child: Container(
+          height: size.height - 40,
+          padding: const EdgeInsets.symmetric(
+            vertical: 20,
+          ),
+          child: Obx(
+            () => Column(
+              children: [
+                //Campo de busca
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: CustomTextField(
+                    icon: Icons.search,
+                    label: 'Pesquise filmes',
+                    controller: controller.queryController.value,
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        controller.showTab.value = true;
+                      } else {
+                        controller.showTab.value = false;
+                        controller.searchMovie(value);
+                      }
+                    },
                   ),
                 ),
-              ),
-              Visibility(
-                  visible:
-                      !controller.showTab.value && !controller.loading.value,
-                  child: controller.detailsSearch.isNotEmpty
-                      ? Expanded(
-                          child: ListView.builder(
-                            itemCount: controller.detailsSearch.length,
-                            itemBuilder: (context, index) => OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  elevation: 0, side: BorderSide.none),
-                              onPressed: () {
-                                controller.castMovie(
-                                    controller.detailsSearch[index].id!);
-                                Get.toNamed(Routes.details,
-                                    arguments: controller.detailsSearch[index]);
-                              },
-                              child: CardMovie(
-                                  movie: controller.detailsSearch[index]),
-                            ),
-                          ),
-                        )
-                      : Center(
-                          child: Text(
-                            'Nenhum filme encontrado',
-                            style: GoogleFonts.montserrat(
-                              color: gray,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )),
-              // Tabview
-              Visibility(
-                visible: controller.showTab.value,
-                child: Expanded(
-                  child: DefaultTabController(
-                    initialIndex: controller.label.value,
-                    length: 4,
-                    child: Scaffold(
-                        backgroundColor: white,
-                        appBar: PreferredSize(
-                          preferredSize: const Size.fromHeight(65),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: TabBar(
-                              padding: const EdgeInsets.all(0),
-                              indicatorColor: Colors.transparent,
-                              indicatorPadding: EdgeInsets.zero,
-                              labelPadding: EdgeInsets.zero,
-                              labelColor: white,
-                              unselectedLabelColor: darkBlue,
-                              indicatorSize: TabBarIndicatorSize.label,
-                              labelStyle: GoogleFonts.montserrat(
-                                  fontSize: 12, fontWeight: FontWeight.w400),
-                              onTap: (value) {
-                                controller.label.value = value;
-                              },
-                              tabs: [
-                                CustomTabLabel(
-                                  label: 'Ação',
-                                  position: 0,
-                                  positionAtual: controller.label.value,
-                                ),
-                                CustomTabLabel(
-                                  label: 'Aventura',
-                                  position: 1,
-                                  positionAtual: controller.label.value,
-                                ),
-                                CustomTabLabel(
-                                  label: 'Fantasia',
-                                  position: 2,
-                                  positionAtual: controller.label.value,
-                                ),
-                                CustomTabLabel(
-                                  label: 'Comédia',
-                                  position: 3,
-                                  positionAtual: controller.label.value,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        body: const TabBarView(
-                          physics: NeverScrollableScrollPhysics(),
-                          children: [
-                            ActionTab(),
-                            AdventureTab(),
-                            FantasyTab(),
-                            ComedyTab(),
-                          ],
-                        )),
+                Visibility(
+                  visible: controller.loading.value,
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: darkBlue,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Visibility(
+                    visible:
+                        !controller.showTab.value && !controller.loading.value,
+                    child: controller.detailsSearch.isNotEmpty
+                        ? Expanded(
+                            child: ListView.builder(
+                              itemCount: controller.detailsSearch.length,
+                              itemBuilder: (context, index) => OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                    elevation: 0, side: BorderSide.none),
+                                onPressed: () {
+                                  controller.castMovie(
+                                      controller.detailsSearch[index].id!);
+                                  Get.toNamed(Routes.details,
+                                      arguments:
+                                          controller.detailsSearch[index]);
+                                },
+                                child: CardMovie(
+                                    movie: controller.detailsSearch[index]),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child: Text(
+                              'Nenhum filme encontrado',
+                              style: GoogleFonts.montserrat(
+                                color: gray,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          )),
+                // Tabview
+                Visibility(
+                  visible: controller.showTab.value,
+                  child: Expanded(
+                    child: DefaultTabController(
+                      initialIndex: controller.label.value,
+                      length: 4,
+                      child: Scaffold(
+                          backgroundColor: white,
+                          appBar: PreferredSize(
+                            preferredSize: const Size.fromHeight(65),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: TabBar(
+                                padding: const EdgeInsets.all(0),
+                                indicatorColor: Colors.transparent,
+                                indicatorPadding: EdgeInsets.zero,
+                                labelPadding: EdgeInsets.zero,
+                                labelColor: white,
+                                unselectedLabelColor: darkBlue,
+                                indicatorSize: TabBarIndicatorSize.label,
+                                labelStyle: GoogleFonts.montserrat(
+                                    fontSize: 12, fontWeight: FontWeight.w400),
+                                onTap: (value) {
+                                  controller.label.value = value;
+                                },
+                                tabs: [
+                                  CustomTabLabel(
+                                    label: 'Ação',
+                                    position: 0,
+                                    positionAtual: controller.label.value,
+                                  ),
+                                  CustomTabLabel(
+                                    label: 'Aventura',
+                                    position: 1,
+                                    positionAtual: controller.label.value,
+                                  ),
+                                  CustomTabLabel(
+                                    label: 'Fantasia',
+                                    position: 2,
+                                    positionAtual: controller.label.value,
+                                  ),
+                                  CustomTabLabel(
+                                    label: 'Comédia',
+                                    position: 3,
+                                    positionAtual: controller.label.value,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          body: const TabBarView(
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                              ActionTab(),
+                              AdventureTab(),
+                              FantasyTab(),
+                              ComedyTab(),
+                            ],
+                          )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
