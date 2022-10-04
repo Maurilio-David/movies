@@ -1,16 +1,22 @@
-# movies
+# Movies
 
-A new Flutter project.
+Projeto desenvolvido com Flutter.
 
-## Getting Started
+Foi usado Getx para gerenciamento de dependência e de estado.
 
-This project is a starting point for a Flutter application.
+Pacotes utilizados: get, google_fonts, dio, intl e data_connection_checker_nulls
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tela Inicial
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Ao inicializar, o aplicativo verifica a conexão com a internet e caso conectado irá fazer as requisições dos filmes mais populares dos gêneros de ação, aventura, fantasia e comédia. Em caso de falta de conexão o aplicativo exibirá uma mensagem informando a falta de conexão e um botão para tentar novamente.
+
+O usuário pode buscar um filme específico através do campo de texto no topo da tela, caso encontre filmes relacionado a busca, irá exibir a lista de filmes, caso não encontre o app irá informar que nenhum filme foi encontrado.
+
+Todos os filmes são exbidos em cards com a imagem de capa do filme preenchida ao fundo do card. 
+
+## Tela de Detalhes
+Quando o usuário clicar sobre o card será levado para a tela de detalhes do filme onde encontrará informações mais detalhas do filme(Quando disponível). 
+Avaliação, Titulo em portugês, Titulo Original, Ano, Duração, Gêneros, Descrição, Orçamento, Produtoras, Diretores e Elenco.
+
+
